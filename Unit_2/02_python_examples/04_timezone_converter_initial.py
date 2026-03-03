@@ -8,8 +8,10 @@ def get_zoneinfo(tz_id: str) -> ZoneInfo:
     """Return ZoneInfo for tz_id, raise TimezoneConversionError if not found."""
     try:
         return ZoneInfo(tz_id)
-    except ZoneInfoNotFoundError:
-        raise TimezoneConversionError(f"Timezone '{tz_id}' not found or tzdata missing.")
+    except ZoneInfoNotFoundError as exc:
+        raise TimezoneConversionError(
+            f"Timezone '{tz_id}' not found or tzdata missing."
+        ) from exc
 
 def local_to_utc(date_str: str, time_str: str, source_tz: str, *, fold: int,
                  nonexistent: str) -> datetime:
